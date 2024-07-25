@@ -3,32 +3,25 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 
 public class TestCase3 {
-// Şifre en az 8 haneli olmalıdır. 
+// Kullanıcı adı ve şifre girilmediğinde. 
 	public static void main(String[] args){
 		// Kullanıcağımız driverı ve ulaşacağımız lokasyonu set ediyoruz
 		System.setProperty("webdriver.chrome.driver","D:\\Browser drivers\\chromedriver.exe");
 		WebDriver driver = new ChromeDriver();
 	    
-		String baseUrl = "http://localhost/";
+		String baseUrl = "https://www.saucedemo.com/";
 	    driver.get(baseUrl);
-	    
-	    //Sayfada bulunan her bir eleman için test dedğerlerini gönderiyoruz.
-	   	driver.findElement(By.name("E-Posta")).sendKeys("ardaovalı@gmail.com");
-		driver.findElement(By.name("Şifre")).sendKeys("12345Ee");
-		driver.findElement(By.name("Telefon Numarası")).sendKeys("05467891245");
-		driver.findElement(By.name("Bel Çevresi")).sendKeys("90");
-		driver.findElement(By.name("Omuz Çevresi")).sendKeys("60");
-		driver.findElement(By.name("Kilo")).sendKeys("90");
-		driver.findElement(By.name("Kaydet")).click();
+
+	    driver.findElement(By.id("login-button")).click();
 		
-		String expected_title = ""; //Bir sonraki sayfanın başlığını bekliyoruz.
-		String actual_title = driver.getTitle();// Başlık alınır.
+		String expected_string = "Epic sadface: Username is required"; //Sayfanın error mesajı.
+		String actual_string = driver.findElement(By.xpath("//*[@id=\"login_button_container\"]/div/form/div[3]")).getText();// Metin alınır.
 		
-		if(expected_title.equals(actual_title)){
+		if(expected_string.equals(actual_string)){
+			System.out.println("Case 3 succesful");
+		}else {
 			System.out.println("Case 3 failed");
-		}else{
-			System.out.println("Case 3 successful");
-		}//Kayıt olursak test başarısız demektir.
+		}//Login olursak test başarısız demektir.
 		
 	   	//Tarayıcıyı kapatıyoruz.
 	   	driver.close();

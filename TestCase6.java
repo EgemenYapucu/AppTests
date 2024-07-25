@@ -7,30 +7,24 @@ public class TestCase6 {
 		// Kullanıcağımız driverı ve ulaşacağımız lokasyonu set ediyoruz
 		System.setProperty("webdriver.chrome.driver","D:\\Browser drivers\\chromedriver.exe");
 		WebDriver driver = new ChromeDriver();
-	    
-		String baseUrl = "http://localhost/";
-	    driver.get(baseUrl);
-	    
-	    //Sayfada bulunan her bir eleman için test dedğerlerini gönderiyoruz.
-	   	driver.findElement(By.name("E-Posta")).sendKeys("ardaovalı@gmail.com");
-		driver.findElement(By.name("Şifre")).sendKeys("123456Ee");
-		driver.findElement(By.name("Telefon Numarası")).sendKeys("05467891245");
-		driver.findElement(By.name("Bel Çevresi")).sendKeys("-90");
-		driver.findElement(By.name("Omuz Çevresi")).sendKeys("-60");
-		driver.findElement(By.name("Kilo")).sendKeys("-90");
-		driver.findElement(By.name("Kaydet")).click();
+				    
+		String baseUrl = "https://www.saucedemo.com/";
+		driver.get(baseUrl);
+		//Sayfada bulunan her bir eleman için test dedğerlerini gönderiyoruz.
+		driver.findElement(By.id("user-name")).sendKeys("standard_user");
+		driver.findElement(By.id("password")).sendKeys("secret_sauce");    
+		driver.findElement(By.id("login-button")).click();
+		driver.findElement(By.id("add-to-cart-sauce-labs-bike-light")).click();
+		driver.findElement(By.xpath("//*[@id=\"shopping_cart_container\"]/a")).click();
 		
-		String expected_title = ""; //Bir sonraki sayfanın başlığını bekliyoruz.
-		String actual_title = driver.getTitle();// Başlık alınır.
-		
-		if(expected_title.equals(actual_title)){
-			System.out.println("Case 6 failed");
+		String expected_string = "Sauce Labs Bike Light";
+		String actual_string = driver.findElement(By.xpath("//*[@id=\"item_0_title_link\"]/div")).getText();
+		if(expected_string.equals(actual_string)){
+			System.out.println("Case 6 succesful");
 		}else {
-			System.out.println("Case 6 successful");
-		}//Kayıt olursak test başarısız demektir.
-		
-	   	//Tarayıcıyı kapatıyoruz.
-	   	driver.close();
+			System.out.println("Case 6 failed");
+		}//Textler eşleşiyorsa test başarılı demektir.
+		driver.close();
 	}
 
 }

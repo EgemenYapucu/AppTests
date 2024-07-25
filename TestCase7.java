@@ -7,30 +7,25 @@ public class TestCase7 {
 		// Kullanıcağımız driverı ve ulaşacağımız lokasyonu set ediyoruz
 		System.setProperty("webdriver.chrome.driver","D:\\Browser drivers\\chromedriver.exe");
 		WebDriver driver = new ChromeDriver();
-	    
-		String baseUrl = "http://localhost/";
-	    driver.get(baseUrl);
-	    
-	    //Sayfada bulunan her bir eleman için test değerlerini gönderiyoruz.
-	   	driver.findElement(By.name("Antrenör adı")).sendKeys("Arda Ovalı");
-		driver.findElement(By.name("Cinsiyeti")).sendKeys("Elma");
-		driver.findElement(By.name("Yaşı")).sendKeys("39");
-		driver.findElement(By.name("Spor Alanı")).sendKeys("Fitness");
-		driver.findElement(By.name("Telefon No")).sendKeys("05314567892");
-		driver.findElement(By.name("Çalışma Günleri")).sendKeys("Pazartesi,Perşembe,Cuma");
-		driver.findElement(By.name("Kaydet")).click();
+				    
+		String baseUrl = "https://www.saucedemo.com/";
+		driver.get(baseUrl);
+		//Sayfada bulunan her bir eleman için test dedğerlerini gönderiyoruz.
+		driver.findElement(By.id("user-name")).sendKeys("standard_user");
+		driver.findElement(By.id("password")).sendKeys("secret_sauce");    
+		driver.findElement(By.id("login-button")).click();
+		driver.findElement(By.id("add-to-cart-sauce-labs-bolt-t-shirt")).click();
+		//driver.findElement(By.id("add-to-cart-sauce-labs-fleece-jacket")).click();
+		driver.findElement(By.xpath("//*[@id=\"shopping_cart_container\"]/a")).click();
 		
-		String expected_title = ""; //Bir sonraki sayfanın başlığını bekliyoruz.
-		String actual_title = driver.getTitle();// Başlık alınır.
-		
-		if(expected_title.equals(actual_title)){
-			System.out.println("Case 7 failed");
+		String expected_string = "Sauce Labs Bolt T-Shirt";
+		String actual_string = driver.findElement(By.xpath("//*[@id=\"item_1_title_link\"]/div")).getText();
+		if(expected_string.equals(actual_string)){
+			System.out.println("Case 7 succesful");
 		}else {
-			System.out.println("Case 7 successful");
-		}//Kayıt olursak test başarısız demektir.
-		
-	   	//Tarayıcıyı kapatıyoruz.
-	   	driver.close();
+			System.out.println("Case 7 failed");
+		}//Textler eşleşiyorsa test başarılı demektir.
+		driver.close();
 	}
 
 }
